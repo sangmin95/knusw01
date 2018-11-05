@@ -20,14 +20,15 @@ void setup() {
 }
 
 void loop() { //코드를 무한반복합니다.
-  spiningMotor();              //모터 작동시키는 함수 호출
+  bool flag;
+  
   if (mySerial.available()) { //블루투스에서 넘어온 데이터가 있다면
     Serial.write(mySerial.read()); //시리얼모니터에 데이터를 출력
-    spiningMotor();
+    spiningMotor(flag);
   }
   if (Serial.available()) {    //시리얼모니터에 입력된 데이터가 있다면
     mySerial.write(Serial.read());  //블루투스를 통해 입력된 데이터 전달
-    spiningMotor();
+    spiningMotor(flag);
   }
 }
 
