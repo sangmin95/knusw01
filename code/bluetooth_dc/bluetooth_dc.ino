@@ -30,6 +30,10 @@ void loop() { //코드를 무한반복합니다.
       flag = false;
     spiningMotor(flag);
   }
+  else{
+    Serial.write("waiting\n");
+    delay(500);
+  }
 }
 
 void spiningMotor(bool flag)
