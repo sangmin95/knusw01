@@ -20,6 +20,7 @@ void loop() {
   Serial.print("CO2 value: ");
 
   Serial.println(val);
+<<<<<<< HEAD
   if(val > 400){
     Serial.println("turn on");
     mySerial.write("1");
@@ -29,4 +30,16 @@ void loop() {
     mySerial.write("0");
     
 //  delay(500);
+=======
+  if(mySerial.available() > 0){
+    Serial.println("mySerial available()");
+    if(val > 600){
+    Serial.println("turn on");
+    mySerial.write("1");
+    }
+  }
+  
+  delay(500);
+
+>>>>>>> b167d58bc94cfd29986398c0f361c158c561720c
 }
