@@ -1,38 +1,39 @@
 #include <SoftwareSerial.h>
 
-const int motorPin = 9;     //ìƒìˆ˜ ì„ ì–¸ : ëª¨í„°ì™€ ì—°ê²°ëœ í•€ ë²ˆí˜¸ ì €ìž¥
-SoftwareSerial mySerial(2, 3); //ë¸”ë£¨íˆ¬ìŠ¤ì˜ Tx, Rxí•€ì„ 2ë²ˆ 3ë²ˆí•€ìœ¼ë¡œ ì„¤ì •
+const int motorPin = 9;     //»ó¼ö ¼±¾ð : ¸ðÅÍ¿Í ¿¬°áµÈ ÇÉ ¹øÈ£ ÀúÀå
+SoftwareSerial mySerial(2, 3); //ºí·çÅõ½ºÀÇ Tx, RxÇÉÀ» 2¹ø 3¹øÇÉÀ¸·Î ¼³Á¤
 bool flag;
-int signal=-1;
+char signal;
 
 void setup() {
-  // ì‹œë¦¬ì–¼ í†µì‹ ì˜ ì†ë„ë¥¼ 9600ìœ¼ë¡œ ì„¤ì •
+  // ½Ã¸®¾ó Åë½ÅÀÇ ¼Óµµ¸¦ 9600À¸·Î ¼³Á¤
   Serial.begin(9600);
-  pinMode(motorPin, OUTPUT);      //9ë²ˆí•€ì„ ì¶œë ¥ìš©ìœ¼ë¡œ ì„¤ì •
+  mySerial.begin(9600);
+  pinMode(motorPin, OUTPUT);      //9¹øÇÉÀ» Ãâ·Â¿ëÀ¸·Î ¼³Á¤
   
   while (!Serial) {
-    ; //ì‹œë¦¬ì–¼í†µì‹ ì´ ì—°ê²°ë˜ì§€ ì•Šì•˜ë‹¤ë©´ ì½”ë“œ ì‹¤í–‰ì„ ë©ˆì¶”ê³  ë¬´í•œ ë°˜ë³µ
+    ; //½Ã¸®¾óÅë½ÅÀÌ ¿¬°áµÇÁö ¾Ê¾Ò´Ù¸é ÄÚµå ½ÇÇàÀ» ¸ØÃß°í ¹«ÇÑ ¹Ýº¹
   }
   Serial.println("connected");
 
-  //ë¸”ë£¨íˆ¬ìŠ¤ì™€ ì•„ë‘ì´ë…¸ì˜ í†µì‹ ì†ë„ë¥¼ 9600ìœ¼ë¡œ ì„¤ì •
+  //ºí·çÅõ½º¿Í ¾ÆµÎÀÌ³ëÀÇ Åë½Å¼Óµµ¸¦ 9600À¸·Î ¼³Á¤
   mySerial.begin(9600);
 }
 
-void loop() { //ì½”ë“œë¥¼ ë¬´í•œë°˜ë³µí•©ë‹ˆë‹¤.
+void loop() { //ÄÚµå¸¦ ¹«ÇÑ¹Ýº¹ÇÕ´Ï´Ù.
   
-  if (mySerial.available()) { //ë¸”ë£¨íˆ¬ìŠ¤ì—ì„œ ë„˜ì–´ì˜¨ ë°ì´í„°ê°€ ìžˆë‹¤ë©´
+  if (mySerial.available()) { //ºí·çÅõ½º¿¡¼­ ³Ñ¾î¿Â µ¥ÀÌÅÍ°¡ ÀÖ´Ù¸é
     signal = mySerial.read();
-    Serial.write(signal); //ì‹œë¦¬ì–¼ëª¨ë‹ˆí„°ì— ë°ì´í„°ë¥¼ ì¶œë ¥
-    if(signal > 0)
-      flag = true;
-    else
+    Serial.println(signal); //½Ã¸®¾ó¸ð´ÏÅÍ¿¡ µ¥ÀÌÅÍ¸¦ Ãâ·Â
+    if(signal == '0')
       flag = false;
+    else{
+      flag = true;
+    }
     spiningMotor(flag);
   }
   else{
-    Serial.write("waiting\n");
-    delay(500);
+    //Serial.write("waiting\n");
   }
 }
 
@@ -47,3 +48,4 @@ void spiningMotor(bool flag)
      Serial.println("off"); 
    }
  }
+
