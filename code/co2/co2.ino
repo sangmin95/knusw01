@@ -34,7 +34,18 @@ void loop() {
     // 아래의 문장을 출력합니다.
    lcd.print("CO2 :" );
    lcd.print(val);
-   lcd.print("   ppm");
+   if(val % 1000 > 0){
+    lcd.print("  ppm"); 
+   }
+   else if(val % 100 > 0){
+    lcd.print("   ppm");
+   }
+   else if(val % 10 > 0){
+    lcd.print("    ppm");
+   }
+   else{
+    lcd.print("ppm");
+   }
    
 
  
